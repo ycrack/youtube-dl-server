@@ -2,7 +2,7 @@
 
 Very spartan Web and REST interface for downloading youtube videos onto a server. [`bottle`](https://github.com/bottlepy/bottle) + [`youtube-dl`](https://github.com/rg3/youtube-dl).
 
-![screenshot](youtube-dl-server.png)
+![screenshot][1]
 
 ## Running
 
@@ -39,6 +39,8 @@ curl -X POST --data-urlencode "url={{url}}" http://{{address}}/youtube-dl/q
 The server uses [`bottle`](https://github.com/bottlepy/bottle) for the web framework and [`youtube-dl`](https://github.com/rg3/youtube-dl) to handle the downloading. The integration with youtube-dl makes use of their [python api](https://github.com/rg3/youtube-dl#embedding-youtube-dl).
 
 This docker image is based on [`python:slim`](https://registry.hub.docker.com/_/python/) and consequently [`debian:stretch-slim`](https://hub.docker.com/_/debian/).
+
+[1]:youtube-dl-server.png
 
 ---
 
