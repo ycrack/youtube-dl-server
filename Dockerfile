@@ -1,14 +1,17 @@
 #
 # youtube-dl Server Dockerfile
 #
-# https://github.com/manbearwiz/youtube-dl-server-dockerfile
+# https://github.com/ycrack/youtube-dl-server
 #
 
-FROM python:alpine
+FROM python:slim
 
-RUN apk add --no-cache \
-  ffmpeg \
-  tzdata
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update && apt-get upgrade -y && \
+  apt-get install -y ffmpeg tzdata wget bzip2 --no-install-recommends && \
+  apt-get clean && \
+  rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
@@ -17,6 +20,10 @@ COPY requirements.txt /usr/src/app/
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /usr/src/app
+
+RUN wget 'https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2' && \
+  tar jxf phantomjs-2.1.1-linux-x86_64.tar.bz2 && \
+  ln -s -r /usr/src/app/phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin/phantomjs
 
 EXPOSE 8080
 

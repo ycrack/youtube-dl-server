@@ -1,12 +1,8 @@
-![Docker Stars Shield](https://img.shields.io/docker/stars/kmb32123/youtube-dl-server.svg?style=flat-square)
-![Docker Pulls Shield](https://img.shields.io/docker/pulls/kmb32123/youtube-dl-server.svg?style=flat-square)
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/manbearwiz/youtube-dl-server/master/LICENSE)
-
 # youtube-dl-server
 
 Very spartan Web and REST interface for downloading youtube videos onto a server. [`bottle`](https://github.com/bottlepy/bottle) + [`youtube-dl`](https://github.com/rg3/youtube-dl).
 
-![screenshot][1]
+![screenshot](youtube-dl-server.png)
 
 ## Running
 
@@ -15,29 +11,10 @@ Very spartan Web and REST interface for downloading youtube videos onto a server
 This example uses the docker run command to create the container to run the app. Here we also use host networking for simplicity. Also note the `-v` argument. This directory will be used to output the resulting videos
 
 ```shell
-docker run -d --net="host" --name youtube-dl -v /home/core/youtube-dl:/youtube-dl kmb32123/youtube-dl-server
+docker run -d -p 80:8080 --name youtube-dl --mount type=bind,src=<download directory>,dst=/youtube-dl -v v1:/usr ycrack/youtube-dl-webui
 ```
 
-### Docker Compose
-
-This is an example service definition that could be put in `docker-compose.yml`. This service uses a VPN client container for its networking.
-
-```yml
-  youtube-dl:
-    image: "kmb32123/youtube-dl-server"
-    network_mode: "service:vpn"
-    volumes:
-      - /home/core/youtube-dl:/youtube-dl
-    restart: always
-```
-
-### Python
-
-If you have python ^3.3.0 installed in your PATH you can simply run like this, providing optional environment variable overrides inline.
-
-```shell
-sudo YDL_SERVER_PORT=8123 python3 -u ./youtube-dl-server.py
-```
+Same for PowerShell.
 
 ## Usage
 
@@ -59,6 +36,12 @@ curl -X POST --data-urlencode "url={{url}}" http://{{address}}:8080/youtube-dl/q
 
 The server uses [`bottle`](https://github.com/bottlepy/bottle) for the web framework and [`youtube-dl`](https://github.com/rg3/youtube-dl) to handle the downloading. The integration with youtube-dl makes use of their [python api](https://github.com/rg3/youtube-dl#embedding-youtube-dl).
 
-This docker image is based on [`python:alpine`](https://registry.hub.docker.com/_/python/) and consequently [`alpine:3.8`](https://hub.docker.com/_/alpine/).
+This docker image is based on [`python:slim`](https://registry.hub.docker.com/_/python/) and consequently [`debian:stretch-slim`](https://hub.docker.com/_/debian/).
 
-[1]:youtube-dl-server.png
+---
+
+## Changes from the original
+
+1. Omit waste code and addjusted in README.md.
+2. Rewrite it to appropriate command in README.md.
+3. Add code for install PhantomJS to Dockerfile. (because it is used for several sites, in youtube-dl.)
