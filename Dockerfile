@@ -9,7 +9,7 @@ FROM python:slim
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && apt-get upgrade -y && \
-  apt-get install -y ffmpeg tzdata wget bzip2 --no-install-recommends && \
+  apt-get install -y libav-tools tzdata wget bzip2 --no-install-recommends && \
   apt-get clean && \
   rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 
