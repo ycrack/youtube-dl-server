@@ -8,8 +8,10 @@ Very spartan Web and REST interface for downloading youtube videos onto a server
 
 ### Docker CLI
 
-This example uses the docker run command to create the container to run the app. Here we also use host networking for simplicity. Also note the `-v` argument. This directory will be used to output the resulting videos
+This example uses the docker run command to create the container to run the app. Here we also use host networking for simplicity. Also note the `-v` argument. This directory will be used to output the resulting videos.
 
+#### example
+Enabled **port forwarding(80 - 8080)**, **volume mount(download dir)**, *keep `/usr` directory* in this case.
 ```shell
 docker run -d -p 80:8080 --name youtube-dl --mount type=bind,src=<download directory>,dst=/youtube-dl -v v1:/usr ycrack/youtube-dl-webui
 ```
@@ -24,12 +26,12 @@ Downloads can be triggered by supplying the `{{url}}` of the requested video thr
 
 #### HTML
 
-Just navigate to `http://{{host}}:8080/youtube-dl` and enter the requested `{{url}}`.
+Just navigate to `http://{{host}}/youtube-dl` and enter the requested `{{url}}`.
 
 #### Curl
 
 ```shell
-curl -X POST --data-urlencode "url={{url}}" http://{{address}}:8080/youtube-dl/q
+curl -X POST --data-urlencode "url={{url}}" http://{{address}}/youtube-dl/q
 ```
 
 ## Implementation
